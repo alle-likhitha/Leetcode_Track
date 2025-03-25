@@ -1,22 +1,21 @@
-# Last updated: 3/24/2025, 6:18:24 PM
+# Last updated: 3/24/2025, 6:28:56 PM
+from collections import defaultdict
+
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        maxl = 0  # max frequency of a character in the current window
-        ans = 0   # stores the longest valid window length
-        l = 0     # left pointer
-        count = {}  # dictionary to store character frequencies
+        start = 0
+        my_dict = {}
+        temp = k #1
+        max_val = 0
 
-        # Right pointer 'r' iterates over the string
-        for r in range(len(s)):  
-            count[s[r]] = count.get(s[r], 0) + 1  # Increase frequency of s[r]
-            maxl = max(maxl, count[s[r]])  # Update max frequency in the current window
-
-            # Check if the window is invalid (i.e., more than 'k' replacements needed)
-            if (r - l + 1) - maxl > k:
-                count[s[l]] -= 1  # Reduce frequency of the character at the left pointer
-                l += 1  # Shrink the window by moving the left pointer forward
-
-            # Update the answer with the maximum valid window size
-            ans = max(ans, r - l + 1)
-
-        return ans
+        for char in s: #AABAB
+            my_dict[char] = my_dict.get(char, 0) + 1 #A:3 B:2 A:2
+            if my_dict[char] > max_val: # 1>0 2>1 3>2 
+                max_val = my_dict[char] # 1 2 3
+            else:
+                temp -= 1 # 0 -1 
+                if temp < 0: 
+                    my_dict[s[start]] -=1 #A:2
+                    start += 1 #1
+                    temp = 0 #0
+        return max_val + k - temp
