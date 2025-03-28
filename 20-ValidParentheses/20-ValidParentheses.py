@@ -1,26 +1,20 @@
-# Last updated: 3/27/2025, 7:51:50 PM
+# Last updated: 3/27/2025, 8:02:32 PM
 class Solution:
     def isValid(self, s: str) -> bool:
-        m = ['(','{','[']
-        n = [')','}',']']
         stack = []
-        v = 0
+        temp = 0
+        m = {'(':')', '{':'}', '[':']'}
+        right = 0
         for i in s:
             if i in m:
+                temp = 1
                 stack.append(i)
-                v = m.index(i)
-                # print(stack)
-            else:
-                if i == n[v] and stack != []:
-                    stack.pop()
-                    # print(stack)
-                    if stack == []:
-                        v = 0
-                    else:
-                        v = m.index(stack[-1])
-                else:
+            elif i in m.values() and stack != []:
+                x = stack.pop()
+                if (i == ')' and x != '(') or (i == '}' and x != '{') or (i == ']' and x != '['):
                     return False
-        if stack == []:
+            else:
+                right += 1
+        if stack == [] and temp == 1 and right == 0:
             return True
-        else:
-            False
+        return False
