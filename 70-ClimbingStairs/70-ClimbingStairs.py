@@ -1,11 +1,15 @@
-# Last updated: 4/2/2025, 7:00:55 PM
+# Last updated: 4/2/2025, 7:02:31 PM
 class Solution:
     def climbStairs(self, n: int) -> int:
-        stack = [1,2]
-        if n <=2:
-            return stack[n-1]
-        for i in range(2,n):
-            stack.append(stack[i-1] + stack[i-2])
-        # print(stack)
+        if n <= 3: return n
 
-        return stack[-1]
+        prev1 = 3
+        prev2 = 2
+        cur = 0
+
+        for _ in range(3, n):
+            cur = prev1 + prev2
+            prev2 = prev1
+            prev1 = cur
+        
+        return cur
