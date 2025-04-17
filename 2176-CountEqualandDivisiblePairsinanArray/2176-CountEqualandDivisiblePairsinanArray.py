@@ -1,7 +1,7 @@
-# Last updated: 4/16/2025, 8:13:35 PM
+# Last updated: 4/16/2025, 8:14:58 PM
 class Solution:
     def countPairs(self, nums: List[int], k: int) -> int:
-        def check(di, newi, k):
+        def check(di, newi):
             c = 0
             # print(di, newi, k)
             for j in di:
@@ -14,7 +14,7 @@ class Solution:
         res = 0
         for i in range(len(nums)):
             if nums[i] in d:
-                res += check(d[nums[i]], i, k)
+                res += check(d[nums[i]], i)
                 d[nums[i]].append(i)
             else:
                 d[nums[i]].append(i)
